@@ -1,0 +1,57 @@
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
+    border-radius: 1rem;
+    max-width: 100%;
+    font-size: 2rem;
+}
+
+
+
+.inputDiv {
+    float: right;
+    background-color: red;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.inputDiv input {
+    width: 5px;
+    outline: none;
+    font-size: 2rem;
+    border: none;
+    background-color: inherit;
+    text-align: right;
+}
+
+/* Left div of typing */
+.wordDivLeft {
+    padding-left: 0.3rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width:50%;
+}
+
+.wordDivLeft p {
+    color: #6e6e6e;
+    white-space: pre;
+    direction: rtl;
+    overflow: hidden;
+}
+
+/* Eight div of typing */
+.wordDivRight {
+    padding-right: 0.3rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width:50%;
+
+
+}
+
+.wordDivRight p {
+    white-space: pre;
+    overflow: hidden;
+}

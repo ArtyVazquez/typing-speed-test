@@ -1,5 +1,6 @@
 .container {
   padding: 0 2rem;
+  background: linear-gradient(90deg,#e3ffe7,#d9e7ff);
 }
 
 .main {
