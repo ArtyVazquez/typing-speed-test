@@ -14,6 +14,7 @@ export default function SpeedTest(props) {
   const [startTimer, setStartTimer] = useState(false);
   
   const [wpm, setWPM]  = useState(0);
+  const [accuracy, setAccuracy]  = useState(null);
   const [modalState, setModalState] = useState('none');
   
   const inputRef = useRef();
@@ -57,11 +58,8 @@ export default function SpeedTest(props) {
   }
 
   function timerOutHandler() {
-    console.log(calcualteWPM());
-    setWPM(calcualteWPM());
-    // redirect to result page
-    // or
-    // make a custom component for results
+    setWPM(calcualteWPM()[0]);
+    setAccuracy(calcualteWPM()[1]);
     inputRef.current.blur();
     setModalState('block'); // display the modal
   }
@@ -73,7 +71,9 @@ export default function SpeedTest(props) {
       if (randWordPool[i] == userResult[i])
         totalRight++;
     }
-    return totalRight;
+
+    let accuracyPercentage = Math.round((totalRight / userResult.length) * 100);
+    return [totalRight, accuracyPercentage];
   }
 
 
@@ -81,7 +81,8 @@ export default function SpeedTest(props) {
     <>
       <Result modalState= {modalState} 
               setModalState={setModalState} 
-              wpm={wpm}/>
+              wpm={wpm}
+              accuracy={accuracy}/>
       
       <div>
         <Timer time={60} timerOut={timerOutHandler} startTimer={startTimer}/>
@@ -91,11 +92,9 @@ export default function SpeedTest(props) {
 
         <div className={styles.wordDivLeft}
             onClick={onDivClickHandler}>
-          
           <p>
             {leftText}‎
           </p>
-          
         </div>
 
         <div className={styles.inputDiv} >
@@ -109,16 +108,12 @@ export default function SpeedTest(props) {
         
         <div className={styles.wordDivRight}
               onClick={onDivClickHandler}>
-          
             <p>
               {rightText}
             </p>
-          
         </div>
 
       </div>
-     
-      
     </>
   )
 }

@@ -15,7 +15,7 @@ export default function Result(props) {
                 <span className={styles.close} onClick={() => {props.setModalState('none'); router.reload('/');}}>&times;</span>
                 <h1>Typing Test Complete!</h1>
                 <h2>You typed the 1 Minute Typing Test.</h2>
-                <h3>Your speed was {props.wpm} WPM with accuracy </h3>
+                <h3>Your speed was {props.wpm} WPM with accuracy {props.accuracy}%</h3>
             </div>
         </div>
     </>
