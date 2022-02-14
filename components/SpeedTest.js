@@ -1,28 +1,35 @@
 import { useState, useRef } from "react"
-import randomWords from 'random-words'
+import Result from "./Result";
 import styles from './SpeedTest.module.css'
-import '../WordStructure/LinkedList.js'
-import Timer from './Timer.js';
+import Timer from './Timer'
 
-export default function SpeedTest() {
+export default function SpeedTest(props) {
 
-  const randWordPool = randomWords({ min: 100, max: 100 });
+  const randWordPool = props.randWords;// get n number of random words
+  
   const [rightText, setRightText] = useState(randWordPool.join(' '));
   const [leftText, setLeftText] = useState('');
   const [inputText, setInputText] = useState('');
-  let totalMisses = 0;
-  let totalCurrentWords = 0;
-  let currIndex = 0;
+  
+  const [startTimer, setStartTimer] = useState(false);
+  
+  const [wpm, setWPM]  = useState(0);
+  const [modalState, setModalState] = useState('none');
+  
   const inputRef = useRef();
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 60); // 10 minutes timer
 
 
+  // when any div is clikced set focus on the input
   function onDivClickHandler() {
     inputRef.current.focus();
   }
 
+
+  // when any char is inputted change the state of both divs
   function inputHandler(e) {
+    
+     // only call on the first input char
+      setStartTimer(true);
 
       // check if the word inputted wad correct
       if (e.target.value == rightText.charAt(0)) {
@@ -32,18 +39,14 @@ export default function SpeedTest() {
         setLeftText(leftText + '❌');
       }
       setInputText('');
-
-    
-
   }
 
+  // hadnler for backspace
   function keyDownHandler(e) {
-    
     // backspace
     if (e.which == 8) {
       let saveChar = leftText.charAt( leftText.length-1);
 
-       console.log(leftText);
       if (saveChar == '❌') {
         setLeftText(leftText.slice(0, leftText.length-1));
       } else {
@@ -51,13 +54,39 @@ export default function SpeedTest() {
         setLeftText(leftText.slice(0, leftText.length-1));
       }
     }
-
   }
+
+  function timerOutHandler() {
+    console.log(calcualteWPM());
+    setWPM(calcualteWPM());
+    // redirect to result page
+    // or
+    // make a custom component for results
+    inputRef.current.blur();
+    setModalState('block'); // display the modal
+  }
+  
+  function calcualteWPM() {
+    const userResult = leftText.split(' ');
+    let totalRight = 0;
+    for (let i = 0; i < userResult.length; ++i) {
+      if (randWordPool[i] == userResult[i])
+        totalRight++;
+    }
+    return totalRight;
+  }
+
 
   return (
     <>
-      <Timer expiryTimestamp={time}/>
+      <Result modalState= {modalState} 
+              setModalState={setModalState} 
+              wpm={wpm}/>
       
+      <div>
+        <Timer time={60} timerOut={timerOutHandler} startTimer={startTimer}/>
+      </div>
+
       <div className={styles.box}>
 
         <div className={styles.wordDivLeft}
@@ -71,10 +100,10 @@ export default function SpeedTest() {
 
         <div className={styles.inputDiv} >
           <input type='text' 
-                 ref={inputRef}
-                 maxLength={1} 
-                 value={inputText} 
-                 onChange={(e) => inputHandler(e)} 
+                ref={inputRef}
+                maxLength={1} 
+                value={inputText} 
+                onChange={(e) => inputHandler(e)} 
                 onKeyDown={(e) => keyDownHandler(e)}/>
         </div>
         
@@ -88,6 +117,8 @@ export default function SpeedTest() {
         </div>
 
       </div>
+     
+      
     </>
   )
 }

@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import SpeedTest from '../components/SpeedTest'
+import axios from "axios"
+import  randomWords  from 'random-words'
 
-export default function Home() {
+export default function Home(props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -12,7 +14,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <SpeedTest />
+        <SpeedTest randWords={randomWords(220)}/>
       </main>
 
       <footer className={styles.footer}>
@@ -20,4 +22,25 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+// instead of using import randomWords from 'random-words'. The random words will be fetched from http://random-word-api.herokuapp.com
+export async function getServerSideProps() {
+  const numWords = 5;
+  const url = `https://random-word-api.herokuapp.com/word?number=${numWords}`;
+
+  try {
+    var res = await axios.get(url);
+  } catch(error) {
+    console.log(error);
+  }
+
+  console.log(res.data);
+
+  return {
+    props: {
+      data: res.data
+    }
+  }
+
 }

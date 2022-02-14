@@ -1,33 +1,22 @@
-import { useTimer } from 'react-timer-hook';
+import { useState } from 'react'
+import styles from './Timer.module.css'
 
-export default function Timer({ expiryTimestamp }) {
-  const {
-    seconds,
-    isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+export default function Timer(props) {
+  const [secCounter, setSecCounter] = useState(props.time);
 
+  // make a circular timer
+  let timer = setTimeout (() => {
+    if (props.startTimer) {
+      if (secCounter > 0)
+        setSecCounter(secCounter - 1);
+      else
+        props.timerOut();
+    }
+  }, 1000);
 
   return (
-    <div style={{textAlign: 'center'}}>
-      <h1>react-timer-hook </h1>
-      <p>Timer Demo</p>
-      <div style={{fontSize: '100px'}}>
-        <span>{seconds}</span>
-      </div>
-      <p>{isRunning ? 'Running' : 'Not running'}</p>
-      <button onClick={start}>Start</button>
-      <button onClick={pause}>Pause</button>
-      <button onClick={resume}>Resume</button>
-      <button onClick={() => {
-        // Restarts to 5 minutes timer
-        const time = new Date();
-        time.setSeconds(time.getSeconds() + 300);
-        restart(time)
-      }}>Restart</button>
+    <div className={styles.roundDiv}>
+       <h1> {secCounter} </h1>
     </div>
-  );
+  )
 }

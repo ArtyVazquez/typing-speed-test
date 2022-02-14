@@ -6,13 +6,13 @@
     border-radius: 1rem;
     max-width: 100%;
     font-size: 2rem;
+    margin: 50px;
 }
 
 
 
 .inputDiv {
     float: right;
-    background-color: red;
     white-space: nowrap;
     text-align: right;
 }
@@ -32,6 +32,7 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
     width:50%;
+    opacity: 0.3;
 }
 
 .wordDivLeft p {
