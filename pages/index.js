@@ -18,7 +18,7 @@ export default function Home(props) {
         <div className={styles.title}>
           <h1>TYPING SPEED TEST</h1>
           <p>Want to know how fast you can type? Proceed and take the 60 second typing speed test!</p>
-          <p>On average most people can type around 40 WMP and the highest has been 216 WPM.</p>
+          <p>On average most people can type around 40 WPM and the highest has been 216 WPM.</p>
         </div>
 
         <SpeedTest randWords={props.data}/>

@@ -40,7 +40,7 @@ export default function SpeedTest(props) {
       } else {
         // if space skip the word and replace each char with a X
         if (e.target.value == ' ') { 
-          if (leftText.charAt(leftText.length-1).match(/^[a-zA-Z]/)) { // and previous is a letter
+          if (leftText.charAt(leftText.length-1).match(/^[a-zA-Z]/) ||leftText.charAt(leftText.length-1) == '❌' ) { // and previous is a letter
             const extractWord = rightText.split(' ')[0];
             setRightText(rightText.slice(extractWord.length+1)); 
             setLeftText(leftText + '❌'.repeat(extractWord.length)+' ');
