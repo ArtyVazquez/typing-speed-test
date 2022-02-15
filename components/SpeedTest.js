@@ -2,6 +2,8 @@ import { useState, useRef } from "react"
 import Result from "./Result";
 import styles from './SpeedTest.module.css'
 import Timer from './Timer'
+import useSound from 'use-sound'
+import blueSwitch from '../Sounds/blue-switch.mp3'
 
 export default function SpeedTest(props) {
 
@@ -17,6 +19,12 @@ export default function SpeedTest(props) {
   const [cpm, setCPM]  = useState(0);
   const [accuracy, setAccuracy]  = useState(null);
   const [modalState, setModalState] = useState('none');
+
+  const [playbackRate, setPlaybackRate] = useState(2.2);
+  const [play] = useSound(blueSwitch, {
+    playbackRate,
+    volume: 0.5,
+  });
   
   const inputRef = useRef();
 
@@ -30,6 +38,7 @@ export default function SpeedTest(props) {
   // when any char is inputted change the state of both divs
   function inputHandler(e) {
     
+      play();
      // only call on the first input char
       setStartTimer(true);
 
@@ -58,6 +67,7 @@ export default function SpeedTest(props) {
 
   // hadnler for backspace
   function keyDownHandler(e) {
+    play();
     // backspace
     if (e.which == 8) {
       let saveChar = leftText.charAt(leftText.length-1);
