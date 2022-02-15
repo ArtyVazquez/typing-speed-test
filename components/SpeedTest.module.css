@@ -54,3 +54,23 @@
     white-space: pre;
     overflow: hidden;
 }
+
+.currStats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.currStats div{
+    margin: 8px;
+/*     
+    background-color: aquamarine;
+    width: 70px;
+    height: 100px;
+    border-radius: 50%;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle; */
+
+
+}

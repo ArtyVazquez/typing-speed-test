@@ -33,6 +33,8 @@ export default function SpeedTest(props) {
      // only call on the first input char
       setStartTimer(true);
 
+      
+
       // check if the word inputted wad correct
       if (e.target.value == rightText.charAt(0)) {
         setLeftText(leftText + e.target.value);
@@ -40,6 +42,7 @@ export default function SpeedTest(props) {
       } else {
         // if space skip the word and replace each char with a X
         if (e.target.value == ' ') { 
+         
           if (leftText.charAt(leftText.length-1).match(/^[a-zA-Z]/) ||leftText.charAt(leftText.length-1) == '❌' ) { // and previous is a letter
             const extractWord = rightText.split(' ')[0];
             setRightText(rightText.slice(extractWord.length+1)); 
@@ -49,6 +52,7 @@ export default function SpeedTest(props) {
           setLeftText(leftText + '❌');
         }
       }
+      calcualteStats();
       setInputText('');
   }
 
@@ -70,25 +74,25 @@ export default function SpeedTest(props) {
   }
 
   function timerOutHandler() {
-    setWPM(calcualteWPM()[0]);
-    setAccuracy(calcualteWPM()[1]);
-    setCPM(calcualteWPM()[2]);
+    calcualteStats();
     inputRef.current.blur();
     setModalState('block'); // display the modal
   }
   
-  function calcualteWPM() {
+  function calcualteStats() {
     const userResult = leftText.split(' ');
-    let totalRight = 0;
+    let wpm = 0;
     for (let i = 0; i < userResult.length; ++i) {
       if (randWordPool[i] == userResult[i])
-        totalRight++;
+        wpm++;
     }
 
-    const accuracyPercentage = Math.round((totalRight / userResult.length) * 100);
+    const accuracyPercentage = Math.round((wpm / userResult.length) * 100);
     const cpm = leftText.length;
 
-    return [totalRight, accuracyPercentage, cpm];
+    setWPM(wpm);
+    setAccuracy(accuracyPercentage);
+    setCPM(cpm);
   }
 
 
@@ -100,8 +104,14 @@ export default function SpeedTest(props) {
               cpm={cpm}
               accuracy={accuracy}/>
       
-      <div>
+      <div className={styles.currStats}>
         <Timer time={60} timerOut={timerOutHandler} startTimer={startTimer}/>
+        
+        <div>
+          <div>wpm: {wpm}</div>
+          <div>cpm: {cpm}</div>
+          <div>accuracy: {accuracy}</div>
+        </div>
       </div>
 
       <div className={styles.box}>
@@ -109,7 +119,7 @@ export default function SpeedTest(props) {
         <div className={styles.wordDivLeft}
             onClick={onDivClickHandler}>
           <p>
-            {leftText}‎
+          ‎{leftText}‎
           </p>
         </div>
 
