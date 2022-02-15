@@ -14,6 +14,7 @@ export default function SpeedTest(props) {
   const [startTimer, setStartTimer] = useState(false);
   
   const [wpm, setWPM]  = useState(0);
+  const [cpm, setCPM]  = useState(0);
   const [accuracy, setAccuracy]  = useState(null);
   const [modalState, setModalState] = useState('none');
   
@@ -37,7 +38,16 @@ export default function SpeedTest(props) {
         setLeftText(leftText + e.target.value);
         setRightText(rightText.slice(1, rightText.length));
       } else {
-        setLeftText(leftText + '❌');
+        // if space skip the word and replace each char with a X
+        if (e.target.value == ' ') { 
+          if (leftText.charAt(leftText.length-1).match(/^[a-zA-Z]/)) { // and previous is a letter
+            const extractWord = rightText.split(' ')[0];
+            setRightText(rightText.slice(extractWord.length+1)); 
+            setLeftText(leftText + '❌'.repeat(extractWord.length)+' ');
+          }
+        } else {
+          setLeftText(leftText + '❌');
+        }
       }
       setInputText('');
   }
@@ -46,20 +56,23 @@ export default function SpeedTest(props) {
   function keyDownHandler(e) {
     // backspace
     if (e.which == 8) {
-      let saveChar = leftText.charAt( leftText.length-1);
-
-      if (saveChar == '❌') {
-        setLeftText(leftText.slice(0, leftText.length-1));
-      } else {
-        setRightText(saveChar + rightText);
-        setLeftText(leftText.slice(0, leftText.length-1));
-      }
+      let saveChar = leftText.charAt(leftText.length-1);
+      // allow to delete if the left first index is not a space
+      if (saveChar != ' ') {
+        if (saveChar == '❌') {
+          setLeftText(leftText.slice(0, leftText.length-1));
+        } else {
+          setRightText(saveChar + rightText);
+          setLeftText(leftText.slice(0, leftText.length-1));
+        }
+      } 
     }
   }
 
   function timerOutHandler() {
     setWPM(calcualteWPM()[0]);
     setAccuracy(calcualteWPM()[1]);
+    setCPM(calcualteWPM()[2]);
     inputRef.current.blur();
     setModalState('block'); // display the modal
   }
@@ -72,8 +85,10 @@ export default function SpeedTest(props) {
         totalRight++;
     }
 
-    let accuracyPercentage = Math.round((totalRight / userResult.length) * 100);
-    return [totalRight, accuracyPercentage];
+    const accuracyPercentage = Math.round((totalRight / userResult.length) * 100);
+    const cpm = leftText.length;
+
+    return [totalRight, accuracyPercentage, cpm];
   }
 
 
@@ -82,6 +97,7 @@ export default function SpeedTest(props) {
       <Result modalState= {modalState} 
               setModalState={setModalState} 
               wpm={wpm}
+              cpm={cpm}
               accuracy={accuracy}/>
       
       <div>
