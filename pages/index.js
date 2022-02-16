@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import SpeedTest from '../components/SpeedTest'
@@ -5,6 +6,8 @@ import axios from "axios"
 import randomWord  from 'random-words'
 
 export default function Home(props) {
+
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -14,7 +17,6 @@ export default function Home(props) {
       </Head>
 
       <main className={styles.main}>
-        
         <div className={styles.title}>
           <h1>TYPING SPEED TEST</h1>
           <p>Want to know how fast you can type? Proceed and take the 60 second typing speed test!</p>

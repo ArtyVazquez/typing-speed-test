@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   padding: 0 4rem;
+  /* background: linear-gradient(90deg,#e3ffe7,#d9e7ff); */
 }
 
 .footer {
@@ -51,3 +52,8 @@
   font-size: 1rem;
 }
 
+.user {
+  font-size: 3rem;
+  transform: translate(120%);
+  margin: 1rem;
+}

@@ -16,7 +16,7 @@ export default function Timer(props) {
 
   return (
     <div className={styles.roundDiv}>
-       <h1> {secCounter} </h1>
+      <h1> {secCounter} </h1>
     </div>
   )
 }

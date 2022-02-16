@@ -20,7 +20,7 @@ export default function SpeedTest(props) {
   const [accuracy, setAccuracy]  = useState(null);
   const [modalState, setModalState] = useState('none');
 
-  const [playbackRate, setPlaybackRate] = useState(2.2);
+  const [playbackRate, setPlaybackRate] = useState(2.5);
   const [play] = useSound(blueSwitch, {
     playbackRate,
     volume: 0.5,
@@ -52,7 +52,8 @@ export default function SpeedTest(props) {
         // if space skip the word and replace each char with a X
         if (e.target.value == ' ') { 
          
-          if (leftText.charAt(leftText.length-1).match(/^[a-zA-Z]/) ||leftText.charAt(leftText.length-1) == '❌' ) { // and previous is a letter
+          if (leftText.charAt(leftText.length-1).match(/^[a-zA-Z]/) || 
+              leftText.charAt(leftText.length-1) == '❌' ) { // and previous is a letter
             const extractWord = rightText.split(' ')[0];
             setRightText(rightText.slice(extractWord.length+1)); 
             setLeftText(leftText + '❌'.repeat(extractWord.length)+' ');
@@ -113,6 +114,7 @@ export default function SpeedTest(props) {
               wpm={wpm}
               cpm={cpm}
               accuracy={accuracy}/>
+      
       
       <div className={styles.currStats}>
         <Timer time={60} timerOut={timerOutHandler} startTimer={startTimer}/>
