@@ -2,8 +2,6 @@ import { useState, useRef } from "react"
 import Result from "./Result";
 import styles from './SpeedTest.module.css'
 import Timer from './Timer'
-import useSound from 'use-sound'
-import blueSwitch from '../Sounds/blue-switch.mp3'
 
 export default function SpeedTest(props) {
 
@@ -17,19 +15,15 @@ export default function SpeedTest(props) {
   
   const [wpm, setWPM]  = useState(0);
   const [cpm, setCPM]  = useState(0);
-  const [accuracy, setAccuracy]  = useState(null);
+  const [accuracy, setAccuracy]  = useState(0);
   const [modalState, setModalState] = useState('none');
 
-  const [playbackRate, setPlaybackRate] = useState(2.5);
-  const [play] = useSound(blueSwitch, {
-    playbackRate,
-    volume: 0.5,
-  });
-  
   const inputRef = useRef();
 
 
-  // when any div is clikced set focus on the input
+  const time = 60;
+
+  // when any div is clicked set focus on the input
   function onDivClickHandler() {
     inputRef.current.focus();
   }
@@ -38,7 +32,6 @@ export default function SpeedTest(props) {
   // when any char is inputted change the state of both divs
   function inputHandler(e) {
     
-      play();
      // only call on the first input char
       setStartTimer(true);
 
@@ -62,13 +55,12 @@ export default function SpeedTest(props) {
           setLeftText(leftText + '❌');
         }
       }
-      calcualteStats();
+      calculateStats();
       setInputText('');
   }
 
-  // hadnler for backspace
+  // handler for backspace
   function keyDownHandler(e) {
-    play();
     // backspace
     if (e.which == 8) {
       let saveChar = leftText.charAt(leftText.length-1);
@@ -85,12 +77,12 @@ export default function SpeedTest(props) {
   }
 
   function timerOutHandler() {
-    calcualteStats();
+    calculateStats();
     inputRef.current.blur();
     setModalState('block'); // display the modal
   }
   
-  function calcualteStats() {
+  function calculateStats() {
     const userResult = leftText.split(' ');
     let wpm = 0;
     for (let i = 0; i < userResult.length; ++i) {
@@ -117,13 +109,13 @@ export default function SpeedTest(props) {
       
       
       <div className={styles.currStats}>
-        <Timer time={60} timerOut={timerOutHandler} startTimer={startTimer}/>
+        <Timer time={time} timerOut={timerOutHandler} startTimer={startTimer}/>
         
-        <div>
+        {/* <div>
           <div>wpm: {wpm}</div>
           <div>cpm: {cpm}</div>
           <div>accuracy: {accuracy}</div>
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.box}>

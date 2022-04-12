@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import SpeedTest from '../components/SpeedTest'
@@ -19,15 +18,16 @@ export default function Home(props) {
       <main className={styles.main}>
         <div className={styles.title}>
           <h1>TYPING SPEED TEST</h1>
-          <p>Want to know how fast you can type? Proceed and take the 60 second typing speed test!</p>
-          <p>On average most people can type around 40 WPM and the highest has been 216 WPM.</p>
+          {/* <p>Want to know how fast you can type? Proceed and take the 60 second typing speed test!</p>
+          <p>On average most people can type around 40 WPM and the highest has been 216 WPM.</p> */}
         </div>
 
         <SpeedTest randWords={props.data}/>
       </main>
 
       <footer className={styles.footer}>
-        © 2022 Arturo Vazquez
+        {/* © 2022 Arturo Vazquez */}
+        <a href='https://arturo-vazquez-site.vercel.app/'>© 2022 Arturo Vazquez</a>
       </footer>
     </div>
   )
