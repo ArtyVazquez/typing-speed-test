@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Image from 'next/image'
 import SpeedTest from '../components/SpeedTest'
 import axios from "axios"
 import randomWord  from 'random-words'
@@ -26,8 +27,16 @@ export default function Home(props) {
       </main>
 
       <footer className={styles.footer}>
-        {/* © 2022 Arturo Vazquez */}
-        <a href='https://arturo-vazquez-site.vercel.app/'>© 2022 Arturo Vazquez</a>
+        <a
+          href="https://arturo-vazquez-site.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Designed by{' '}
+        <span className={styles.logo}>
+          <Image src="/arty.png" alt="Arty Logo" width={36} height={36} />
+        </span>
+        </a>
       </footer>
     </div>
   )
