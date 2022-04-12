@@ -21,7 +21,25 @@
     background: linear-gradient(90deg,#e3ffe7,#d9e7ff);
     text-align: center;
   }
+
+  .modalContent h2 {
+    color:darkslategrey ;
+  }
+
+  .modalContent button {
+    border-radius: 2rem;
+    background-color: yellow;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border: none;
+    color: #333;
+    font: inherit;
+  }
   
+  .modalContent button:hover {
+   background-color: yellowgreen;
+  }
+
   /* The Close Button */
   .close {
     color: #aaa;
