@@ -18,3 +18,5 @@ Visit https://typing-speed-test-seven.vercel.app/
 ## Deploy on Vercel
 
 Website was deployed with Vercel. There is no backend as of now but there is a possibility that in the future there will be such feature to either store users scores and rack each user. 
+
+Currently you only have the choice to type for 60 seconds non stop.
