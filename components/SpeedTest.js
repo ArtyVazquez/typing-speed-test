@@ -66,7 +66,7 @@ export default function SpeedTest(props) {
       let saveChar = leftText.charAt(leftText.length-1);
       // allow to delete if the left first index is not a space
       if (saveChar != ' ') {
-        if (saveChar == '❌') {
+        if (saveChar == 'x') {
           setLeftText(leftText.slice(0, leftText.length-1));
         } else {
           setRightText(saveChar + rightText);
